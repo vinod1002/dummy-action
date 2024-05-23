@@ -1,0 +1,14 @@
+name: 'Docker Container Action with Existing Image'
+description: 'A GitHub Action that uses an existing Docker image and installs Python dependencies'
+
+inputs:
+  python_dependencies:
+    description: 'Python dependencies to install'
+    required: true
+outputs:
+  python_dependencies_installed:
+    description: 'Indicates whether Python dependencies were successfully installed'
+runs:
+  using: 'docker'
+  image: 'docker://ubuntu:latest' # Using the Ubuntu Docker image
+  entrypoint: '/entrypoint.sh'
