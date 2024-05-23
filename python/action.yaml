@@ -10,7 +10,7 @@ outputs:
     description: 'Indicates whether Python dependencies were successfully installed'
 runs:
   using: 'docker'
-  image: 'docker://stable' # Using a Docker image with Docker installed
+  image: 'docker://docker:latest' # Using a Docker image with Docker installed
   entrypoint: '/bin/bash'
   args:
     - '-c'
