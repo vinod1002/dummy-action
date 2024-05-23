@@ -11,13 +11,8 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://ubuntu:latest' # Using the Ubuntu Docker image
-  entrypoint: '/entrypoint.sh'
+  entrypoint: '/bin/bash'
   args:
     - '-c'
     - |
-      # Copy the entrypoint script
-      cp $GITHUB_WORKSPACE/python/entrypoint.sh /entrypoint.sh
-      # Ensure the script is executable
-      chmod +x /entrypoint.sh
-      # Run the entrypoint script
-      /entrypoint.sh
+      docker run -v $GITHUB_WORKSPACE/python:/scripts ubuntu:latest /scripts/entrypoint.sh "${{ inputs.python_dependencies }}"
