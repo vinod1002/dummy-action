@@ -10,12 +10,12 @@ outputs:
     description: 'Indicates whether Python dependencies were successfully installed'
 runs:
   using: 'docker'
-  image: 'docker://docker:latest'
+  image: 'docker://docker:stable-dind'
   entrypoint: '/bin/sh'
   args:
     - '-c'
     - |
-      # Ensure Docker is running
+      # Start Docker daemon
       dockerd > /dev/null 2>&1 &
       sleep 5
 
