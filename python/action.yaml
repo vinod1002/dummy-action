@@ -11,7 +11,7 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://docker:stable-dind'
-  entrypoint: '/bin/sh'
+  entrypoint: '/bin/bash'
   args:
     - '-c'
     - |
@@ -20,10 +20,10 @@ runs:
       sleep 5
 
       # Make the script executable
-      chmod +x $GITHUB_WORKSPACE/entrypoint.sh
+      chmod +x $GITHUB_WORKSPACE/python/entrypoint.sh
 
       # List files to debug if the script is present
-      ls -la $GITHUB_WORKSPACE
+      ls -la $GITHUB_WORKSPACE/python
 
-      # Run the container with the repository mounted and execute the script
-      docker run --rm -v $GITHUB_WORKSPACE:/workspace -w /workspace ubuntu:latest /workspace/entrypoint.sh "${{ inputs.python_dependencies }}"
+     # Run the script directly
+      /workspace/python/entrypoint.sh "${{ inputs.python_dependencies }}"
