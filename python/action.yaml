@@ -10,9 +10,14 @@ outputs:
     description: 'Indicates whether Python dependencies were successfully installed'
 runs:
   using: 'docker'
-  image: 'docker://docker:latest' # Using a Docker image with Docker installed
-  entrypoint: '/bin/bash'
+  image: 'docker://docker:latest'
+  entrypoint: '/bin/sh'
   args:
     - '-c'
     - |
-      docker run -v $GITHUB_WORKSPACE/python:/scripts ubuntu:latest /scripts/entrypoint.sh "${{ inputs.python_dependencies }}"
+      # Ensure Docker is running
+      dockerd > /dev/null 2>&1 &
+      sleep 5
+
+      # Run the container with the repository mounted and execute the script
+      docker run --rm -v $GITHUB_WORKSPACE:/workspace -w /workspace ubuntu:latest /workspace/install_dependencies.sh "${{ inputs.python_dependencies }}"
