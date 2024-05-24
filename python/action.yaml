@@ -13,7 +13,7 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://docker:stable-dind'
-  entrypoint: '/bin/bash'
+  entrypoint: '/python/entrypoint.sh'
   args:
     - '-c'
     - |
