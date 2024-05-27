@@ -5,6 +5,10 @@ inputs:
   python_dependencies:
     description: 'Python dependencies to install'
     required: true
+  workspace:
+    description: 'Path to the GitHub workspace directory'
+    required: false
+    default: '${{ github.workspace }}'
 
 outputs:
   python_dependencies_installed:
@@ -20,4 +24,4 @@ container:
   options: '--privileged'  # Add the --privileged flag to enable access to Docker socket
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock  # Mount Docker socket into the container
-    - ${{ github.workspace }}:/workspace
+    - '${{ inputs.workspace }}:/workspace'
