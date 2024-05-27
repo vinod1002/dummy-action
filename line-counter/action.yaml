@@ -13,6 +13,6 @@ outputs:
 runs:
   using: 'docker'
   image: 'alpine:3.12'
-  entrypoint: ["/bin/sh", "/entrypoint.sh"]
+  entrypoint: '/line-counter/entrypoint.sh'
   args:
     - ${{ inputs.file_path }}
