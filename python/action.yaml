@@ -1,5 +1,5 @@
-name: 'Docker Container Action with Existing Image'
-description: 'A GitHub Action that uses an existing Docker image and installs Python dependencies'
+name: 'Install Python Dependencies'
+description: 'A GitHub Action that installs Python dependencies'
 
 inputs:
   python_dependencies:
@@ -12,20 +12,12 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'docker://docker:stable-dind'
-  entrypoint: '/python/entrypoint.sh'
-  args:
-    - '-c'
-    - |
-      # Start Docker daemon
-      dockerd > /dev/null 2>&1 &
-      sleep 5
+  image: 'docker://ubuntu:latest'
+  entrypoint: '/entrypoint.sh'
 
-      # Make the script executable
-      chmod +x $GITHUB_WORKSPACE/python/entrypoint.sh
-
-      # List files to debug if the script is present
-      ls -la $GITHUB_WORKSPACE/python
-
-      # Run the script directly
-      /workspace/python/entrypoint.sh "${{ inputs.python_dependencies }}"
+container:
+  image: 'ubuntu:latest'
+  options: '--privileged'  # Add the --privileged flag to enable access to Docker socket
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock  # Mount Docker socket into the container
+    - ${{ github.workspace }}:/workspace
